@@ -1,6 +1,6 @@
 language: ruby
 branches:
-  only: 
+  only:
   - master
 rvm:
   - 2.4.0
@@ -15,8 +15,8 @@ script:
   - bundle exec rake db:test:prepare
 deploy:
  provider: heroku
-  api-key:
-    secure: $HEROKU_API_KEY
-  app: fast-coast-60649
-  run:
-    - "rake db:migrate"
+ api-key:
+  secure: $HEROKU_API_KEY
+ app: fast-coast-60649
+ run:
+  - "rake db:migrate"
