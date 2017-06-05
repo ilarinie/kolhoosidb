@@ -1,14 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="58e5ab30-50f2-4b89-bf84-1d2aa2181636" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/communes/index.json.jbuilder" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/kolhoosidb.iml" afterPath="$PROJECT_DIR$/.idea/kolhoosidb.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/controllers/communes_controller.rb" afterPath="$PROJECT_DIR$/app/controllers/communes_controller.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/models/commune.rb" afterPath="$PROJECT_DIR$/app/models/commune.rb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/routes.rb" afterPath="$PROJECT_DIR$/config/routes.rb" />
-    </list>
+    <list default="true" id="58e5ab30-50f2-4b89-bf84-1d2aa2181636" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/.bundle/" />
     <ignored path="$PROJECT_DIR$/components/" />
     <ignored path="$PROJECT_DIR$/public/system/" />
@@ -637,12 +630,12 @@
       <option name="presentableId" value="Default" />
       <updated>1496674978440</updated>
       <workItem from="1496674982006" duration="4443000" />
-      <workItem from="1496680558675" duration="1209000" />
+      <workItem from="1496680558675" duration="1811000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="5652000" />
+    <option name="totallyTimeSpent" value="6254000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-1" y="-3" width="1368" height="744" extended-state="6" />
