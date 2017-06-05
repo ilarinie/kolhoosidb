@@ -20,3 +20,4 @@ deploy:
      app: artemis-umbrella
       run:
       - "rake db:migrate"
+      
