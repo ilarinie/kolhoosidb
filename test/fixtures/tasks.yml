@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  commune_id: 1
+  name: MyString
+  priority: 1
+
+two:
+  commune_id: 1
+  name: MyString
+  priority: 1
