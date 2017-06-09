@@ -1,6 +1,15 @@
 class User < ApplicationRecord
-has_secure_password
+  has_secure_password
   has_many :communes,through: :commune_users
   has_many :task_completions
 
+  validates :username, presence: true, uniqueness: true
+  validates :name, presence: true
+  validates :password, confirmation: true, length: { in: 8..20 }
+
+
+  def self.from_token_request request
+    username = request.params["auth"] && request.params["auth"]["username"]
+    self.find_by username: username
+  end
 end
