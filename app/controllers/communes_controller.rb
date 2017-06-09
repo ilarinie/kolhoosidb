@@ -1,4 +1,6 @@
 class CommunesController < ApplicationController
+  before_action :authenticate_user
+
   def create
     @commune = Commune.new(commune_params)
     if @commune.save
