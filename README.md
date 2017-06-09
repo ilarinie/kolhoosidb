@@ -1,24 +1,6 @@
-# README
+# KOLHOOSIDB
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+[![Coverage Status](https://coveralls.io/repos/github/akuakuka/kolhoosidb/badge.svg?branch=master)](https://coveralls.io/github/akuakuka/kolhoosidb?branch=master)
 
-Things you may want to cover:
+[![Build Status](https://travis-ci.org/akuakuka/kolhoosidb.svg?branch=master)](https://travis-ci.org/akuakuka/kolhoosidb)
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
