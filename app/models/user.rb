@@ -4,7 +4,7 @@ class User < ApplicationRecord
   has_many :task_completions
 
   validates :username, presence: true, uniqueness: true
-  validates :name, presence: true
+  validates :name, presence: true, length: {in: 2..30 }
   validates :password, confirmation: true, length: { in: 8..20 }
 
 
