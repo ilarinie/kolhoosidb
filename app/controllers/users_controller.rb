@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:update]
-  before_action :authenticate_user, only: [:update]
+  before_action :set_user, only: [:update, :show]
+  before_action :authenticate_user, only: [:update, :show, :showCurrent, :change_password]
 
 
   def create
@@ -27,6 +27,23 @@ class UsersController < ApplicationController
     end
   end
 
+  def change_password
+    @user = current_user
+    if @user.update(password: params[:password], password_confirmation: params[:password_confirmation])
+      render json: { :message => "Password changed succesfully" }, status: 200
+    else
+      render json: { :errors => @user.errors.full_messages}, status: 406
+    end
+  end
+
+  def show
+  end
+
+  def showCurrent
+    @user = current_user
+    render "show", status: 200
+  end
+
 
 
 
@@ -37,11 +54,11 @@ class UsersController < ApplicationController
   end
 
   def user_update_params
-    params.require(:user).permit(:password, :password_confirmation, :name)
+    params.require(:user).permit(:email, :name)
   end
 
   def user_params
-    params.require(:user).permit(:username, :password, :password_confirmation, :name)
+    params.require(:user).permit(:username, :password, :password_confirmation, :name, :email)
   end
 
 end
