@@ -16,6 +16,7 @@ class UsersController < ApplicationController
   end
 
   def update
+    byebug
     if @user == current_user
       if @user.update(user_update_params)
         render "show", status: 200
@@ -54,7 +55,7 @@ class UsersController < ApplicationController
   end
 
   def user_update_params
-    params.require(:user).permit(:email, :name)
+    params.require(:user).permit(:email, :name, :password, :password_confirmation)
   end
 
   def user_params
