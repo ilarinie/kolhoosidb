@@ -4,7 +4,7 @@ class CommunesController < ApplicationController
   def create
     @commune = Commune.new(commune_params)
     if @commune.save
-      render plain: "OK"
+      render plain: "kakka"
     else
       render plain: "FAILED"
     end
