@@ -1,5 +1,5 @@
 class CommuneUser < ApplicationRecord
-  has_many :users
-  has_many :communes
+  belongs_to :user
+  belongs_to :commune
 
 end
