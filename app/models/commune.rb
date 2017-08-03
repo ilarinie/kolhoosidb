@@ -3,6 +3,7 @@ class Commune < ApplicationRecord
   has_many :users, through: :commune_users
   has_many :purchases, :dependent => :destroy
   has_many :tasks, :dependent => :destroy
+  belongs_to :owner, :class_name => 'User', :foreign_key => 'user_id'
 
   validates :name, presence: true, length: {min:2, maximum: 30}
   validates :name, length: { maximum: 30 }

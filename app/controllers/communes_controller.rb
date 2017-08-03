@@ -22,7 +22,7 @@ class CommunesController < ApplicationController
   EOS
   def create
     @commune = Commune.new(commune_params)
-    byebug
+    @commune.owner = current_user
     if @commune.save
       if CommuneUser.create(user_id: current_user.id, commune_id: @commune.id, admin: true )
         render "show", status: 201
@@ -46,11 +46,17 @@ class CommunesController < ApplicationController
     end
   end
 
+  api :DELETE, "/communes/:id", "Delete a commune, all dependant tasks and budget. Only the owner of the commune can do this."
+  param :id, Integer, "Id of the commune being deleted."
   def destroy
-    if @commune.destroy
-      render status: 204
+    if @commune.owner == current_user
+      if @commune.destroy
+        render status: 204
+      else
+        render status: 406
+      end
     else
-      render status: 406
+      render status: 401
     end
   end
 
