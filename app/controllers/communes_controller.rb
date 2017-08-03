@@ -47,9 +47,9 @@ class CommunesController < ApplicationController
 
   def destroy
     if @commune.destroy
-      render status: 204
+      render plain: "Deleted.", status: 204
     else
-      render status: 406
+      render plain: "Something went wrong", status: 406
     end
   end
 
