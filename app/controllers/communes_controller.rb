@@ -49,6 +49,7 @@ class CommunesController < ApplicationController
   api :DELETE, "/communes/:id", "Delete a commune, all dependant tasks and budget. Only the owner of the commune can do this."
   param :id, Integer, "Id of the commune being deleted."
   def destroy
+
     if @commune.owner == current_user
       if @commune.destroy
         render status: 204
