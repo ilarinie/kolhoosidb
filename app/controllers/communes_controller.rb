@@ -22,7 +22,6 @@ class CommunesController < ApplicationController
   EOS
   def create
     @commune = Commune.new(commune_params)
-    byebug
     if @commune.save
       if CommuneUser.create(user_id: current_user.id, commune_id: @commune.id, admin: true )
         render "show", status: 201
