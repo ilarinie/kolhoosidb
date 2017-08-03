@@ -23,6 +23,11 @@ RSpec.describe CommunesController, type: :controller do
       expect(response).to have_http_status(201)
       expect(Commune.all.count).to eq(1)
     end
+    it 'should not create a new commune without a name' do
+      post :create, params: { commune: FactoryGirl.attributes_for(:commune, name: nil)}, format: :json
+      expect(response).to have_http_status(406)
+      expect(Commune.all.count).to eq(0)
+    end
 
 
 
