@@ -52,12 +52,12 @@ class CommunesController < ApplicationController
 
     if @commune.owner == current_user
       if @commune.destroy
-        render status: 204
+        render plain: "Deleted.", status: 204
       else
-        render status: 406
+        render plain: "Commune could not be deleted.", status: 406
       end
     else
-      render status: 401
+      render plain: "Only commune owners can delete communes.", status: 401
     end
   end
 
