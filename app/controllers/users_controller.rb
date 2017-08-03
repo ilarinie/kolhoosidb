@@ -27,7 +27,7 @@ class UsersController < ApplicationController
   }
   EOS
   error :code => 406, :desc => "User model validation failed, message contains validation errors"
-  def createq
+  def create
     # Luo uuden käyttäjän alhaalla olevien parametrien perusteella
     @user = User.new(user_params)
     if @user.save
