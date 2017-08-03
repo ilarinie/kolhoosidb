@@ -37,8 +37,8 @@ RSpec.describe CommunesController, type: :controller do
     #it 'should return users communes correctly' do
     #  get :index
     #  expect(response).to have_http_status(200)
-
-    end
+    #
+    #end
 
 
   end
