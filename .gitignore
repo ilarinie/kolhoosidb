@@ -45,3 +45,14 @@ bower.json
 
 .idea/
 /.idea
+.idea/*
+
+.idea/dataSources/
+.idea/dataSources.local.xml
+.idea/dataSources.xml
+.idea/inspectionProfiles/
+.idea/kolhoosidb.iml
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
+.idea/workspace.xml

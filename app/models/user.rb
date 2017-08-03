@@ -1,11 +1,12 @@
 class User < ApplicationRecord
   has_secure_password
+  has_many :commune_users, :dependent => :destroy
   has_many :communes,through: :commune_users
   has_many :task_completions
 
-  validates :username, presence: true, uniqueness: true
+  validates :username, presence: true, uniqueness: true, length: {in: 2..30}
   validates :name, presence: true, length: {in: 2..30 }
-  validates :password, confirmation: true, length: { in: 8..20 }
+  validates :password, confirmation: true, length: { in: 8..20 }, :if => :password
 
   def self.from_token_request request
     username = request.params["auth"] && request.params["auth"]["username"]
