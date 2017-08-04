@@ -50,7 +50,7 @@ class CommunesController < ApplicationController
   def destroy
     if @commune.owner == current_user
       if @commune.destroy
-        render :json => { :message =>  "Deleted." }, status: 204
+        render :json => { :message =>  "Deleted." }, status: 200
       else
         render :json => { :error => "Commune could not be deleted." }, status: 406
       end
