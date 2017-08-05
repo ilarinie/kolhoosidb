@@ -24,7 +24,7 @@ class CommunesController < ApplicationController
     @commune = Commune.new(commune_params)
     @commune.owner = current_user
     if @commune.save
-      if CommuneUser.create(user_id: current_user.id, commune_id: @commune.id, admin: true )
+      if @commune.admins.append current_user
         render "show", status: 201
       else
         @error = KolhoosiError.new('Commune created, but adding the user to the commune failed', [])
@@ -67,7 +67,7 @@ class CommunesController < ApplicationController
   api :GET, '/communes', 'Get the current users communes'
   def index
     @current_user = current_user
-    @communes = current_user.communes
+    @communes = current_user.communes + current_user.admin_communes
   end
 
   def show
