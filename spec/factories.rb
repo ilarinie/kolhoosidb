@@ -1,4 +1,12 @@
 FactoryGirl.define do
+  factory :commune_admin do
+    user_id 1
+    commune_id 1
+  end
+  factory :admin do
+    user_id 1
+    commune_id 1
+  end
 
   factory :user, :class => User do
     username "test_user"

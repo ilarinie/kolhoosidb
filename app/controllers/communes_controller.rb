@@ -66,6 +66,7 @@ class CommunesController < ApplicationController
 
   api :GET, '/communes', 'Get the current users communes'
   def index
+    @current_user = current_user
     @communes = current_user.communes
   end
 
