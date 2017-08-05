@@ -18,6 +18,9 @@ FactoryGirl.define do
   factory :commune, :class => Commune do
     name "test_commune_1"
     description "test_commune_1"
+    after(:create) do
+      commune.users
+    end
   end
 
   factory :commune2, :class => Commune do

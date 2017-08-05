@@ -27,10 +27,12 @@ class CommunesController < ApplicationController
       if CommuneUser.create(user_id: current_user.id, commune_id: @commune.id, admin: true )
         render "show", status: 201
       else
-        render plain: "Failed to add new user to commune", status: 500
+        @error = KolhoosiError.new('Commune created, but adding the user to the commune failed', [])
+        render "error", status: 500
       end
     else
-      render :json => { :errors => @commune.errors.full_messages}, status: 406
+      @error = KolhoosiError.new('Commune creation failed due to invalid parameters', @commune.errors.full_messages )
+      render "error", status: 406
     end
   end
 
@@ -42,7 +44,8 @@ class CommunesController < ApplicationController
     if @commune.update(commune_params)
       render "show", status: 200
     else
-      render :json => { :errors => @commune.errors.full_messages }, status: 406
+      @error = KolhoosiError.new('Updating commune failed due to invalid parameters', @commune.errors.full_messages)
+      render 'error', status: 406
     end
   end
 
@@ -52,13 +55,16 @@ class CommunesController < ApplicationController
       if @commune.destroy
         render :json => { :message =>  "Deleted." }, status: 200
       else
-        render :json => { :error => "Commune could not be deleted." }, status: 406
+        @error = KolhoosiError.new('Commune could not be deleted', @commune.errors.full_messages)
+        render 'error', status: 406
       end
     else
-      render :json => { :error =>  "Only commune owners can delete communes." }, status: 401
+      @error = KolhoosiError.new('Only commune owners can delete communes.')
+      render 'error', status: 401
     end
   end
 
+  api :GET, '/communes', 'Get the current users communes'
   def index
     @communes = current_user.communes
   end
@@ -77,7 +83,8 @@ class CommunesController < ApplicationController
   def set_commune_and_check_if_permitted_user
     @commune = Commune.find(params[:id])
     unless @commune.users.include? current_user
-      render :json => { :errors => "User not a part of the commune." }, status: 406
+      @error = KolhoosiError.new('User is not a part of the commune')
+      render 'error', status: 406
       return false
     end
     true
@@ -87,7 +94,8 @@ class CommunesController < ApplicationController
     @commune = Commune.find(params[:id])
     @admin = @commune.is_admin current_user
     unless @admin
-      render :json => { :errors => "User not a admin of the commune." }, status: 406
+      @error = KolhoosiError.new('User not an admin of the commune')
+      render 'error', status: 406
       return false
     end
     true

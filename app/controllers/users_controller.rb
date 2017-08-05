@@ -34,8 +34,9 @@ class UsersController < ApplicationController
       # Jos menee validaatiosta läpi ja tallentuu, palautetaan /views/users/create.json.jbuilder -näkymä ja koodi 201
       render "create", status: 201
     else
+      @error = KolhoosiError.new('Creating user failed due to invalid parameters', @user.errors.full_messages)
       # Jos validaatiot kusee, palautetaan errorit ja status 406
-      render :json => { :errors =>  @user.errors.full_messages }, status: 406
+      render "error", status: 406
     end
   end
 
@@ -60,10 +61,12 @@ class UsersController < ApplicationController
       if @user.update(user_update_params)
         render "show", status: 200
       else
-        render :json => { :errors => @user.errors.full_messages}, status: 406
+        @error = KolhoosiError.new('Updating user failed due to invalid parameters', @user.errors.full_messages)
+        render "error", status: 406
       end
     else
-      render :json => { :errors => ["Cant update other profiles."]}, status: 406
+       @error = KolhoosiError.new('Cant update other profiles', [])
+        render "error", status: 406
     end
   end
 

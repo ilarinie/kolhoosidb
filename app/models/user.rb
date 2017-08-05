@@ -9,11 +9,18 @@ class User < ApplicationRecord
   validates :password, confirmation: true, length: { in: 8..20 }, :if => :password
 
   def self.from_token_request request
-    username = request.params["auth"] && request.params["auth"]["username"]
+    username = request.params['auth'] && request.params['auth']['username']
     self.find_by username: username
   end
 
   def to_json
     super(:except => [:password_digest])
   end
+
+
+  def not_found
+    @error = KolhoosiError.new('Username or password wrong.')
+    render 'error', status: 401
+  end
+
 end
