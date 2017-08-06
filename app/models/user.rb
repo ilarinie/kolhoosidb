@@ -3,6 +3,7 @@ class User < ApplicationRecord
   has_many :commune_users, :dependent => :destroy
   has_many :communes,through: :commune_users
   has_many :commune_admins
+  has_many :admin_communes, through: :commune_admins, :source => :commune
   has_many :task_completions
 
   validates :username, presence: true, uniqueness: true, length: {in: 2..30}

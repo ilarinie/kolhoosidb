@@ -3,6 +3,7 @@ class CommunesController < ApplicationController
   before_action :set_commune_and_check_if_permitted_user, only: [:show]
   before_action :set_commune_and_check_if_admin, only: [:update, :destroy]
 
+
   def_param_group :commune do
     param :commune, Hash,:action_aware => true do
       param :name, String, :desc => "Name of the commune", :required => true
@@ -24,7 +25,7 @@ class CommunesController < ApplicationController
     @commune = Commune.new(commune_params)
     @commune.owner = current_user
     if @commune.save
-      if CommuneUser.create(user_id: current_user.id, commune_id: @commune.id, admin: true )
+      if @commune.admins.append current_user
         render "show", status: 201
       else
         @error = KolhoosiError.new('Commune created, but adding the user to the commune failed', [])
@@ -67,7 +68,7 @@ class CommunesController < ApplicationController
   api :GET, '/communes', 'Get the current users communes'
   def index
     @current_user = current_user
-    @communes = current_user.communes
+    @communes = current_user.communes + current_user.admin_communes
   end
 
   def show
@@ -83,23 +84,34 @@ class CommunesController < ApplicationController
 
   def set_commune_and_check_if_permitted_user
     @commune = Commune.find(params[:id])
-    unless @commune.users.include? current_user
-      @error = KolhoosiError.new('User is not a part of the commune')
-      render 'error', status: 406
+    if not @commune.nil?
+      unless @commune.users.include? current_user
+        @error = KolhoosiError.new('User is not a part of the commune')
+        render 'error', status: 406
+        return false
+      end
+      true
+    else
       return false
     end
-    true
   end
 
   def set_commune_and_check_if_admin
     @commune = Commune.find(params[:id])
-    @admin = @commune.is_admin current_user
-    unless @admin
-      @error = KolhoosiError.new('User not an admin of the commune')
-      render 'error', status: 406
-      return false
+    if not @commune.nil?
+      @admin = @commune.is_admin current_user
+      unless @admin
+        @error = KolhoosiError.new('User not an admin of the commune')
+        render 'error', status: 406
+        return false
+      end
+      true
+    else
+      @error = KolhoosiError.new('Commune not found')
+      render 'error', status: 404
     end
-    true
   end
+
+
 
 end
