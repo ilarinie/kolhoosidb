@@ -14,7 +14,7 @@ RSpec.describe CommunesController, type: :controller do
   end
 
 
-  describe 'POST #create' do
+  describe 'POST /communes' do
     before(:each) do
       @user = create(:user)
       authorize(@user)
@@ -36,7 +36,7 @@ RSpec.describe CommunesController, type: :controller do
     end
   end
 
-  describe 'GET index' do
+  describe 'GET /communes' do
     before(:each) do
       @user = create(:user)
       @user2 = create(:user2)
@@ -56,7 +56,7 @@ RSpec.describe CommunesController, type: :controller do
       expect(result.length).to eq(2)
     end
 
-    it 'should reutnr users own communes' do
+    it 'should return users own communes' do
       authorize(@user2)
       get :index, format: :json
       expect(response).to have_http_status(200)
@@ -79,6 +79,50 @@ RSpec.describe CommunesController, type: :controller do
       expect(response.body).to include('ihan_eri')
       expect(response).to have_http_status(200)
     end
+
+    it 'should not update commune with a valid request from an admin, if parameters are invalid' do
+      authorize(@user)
+      put :update, format: :json, params: { id: @commune.id, commune: { name: '', description: ''}}
+      expect(response).to have_http_status(406)
+    end
+
+    it 'should not update a commune without correct priviledges' do
+      authorize(@user2)
+      put :update, format: :json, params: { id: @commune.id, commune: FactoryGirl.attributes_for(:commune, name: 'ihan_eri') }
+      expect(response).to have_http_status(406)
+    end
+  end
+
+  describe 'DELETE /communes/:id' do
+    before(:each) do
+      @user = create(:user)
+      @user2 = create(:user2)
+      @commune = create(:commune, owner: @user)
+      @commune.admins.append @user
+    end
+
+    it 'should delete commune with a proper request from owner' do
+      authorize(@user)
+      delete :destroy, format: :json, params: { id: @commune.id }
+      expect(response).to have_http_status(200)
+      expect(Commune.all.count).to eq(0)
+    end
+
+    it 'should not delete a commune with a request from non-owner' do
+      authorize(@user2)
+      delete :destroy, format: :json, params: { id: @commune.id }
+      expect(response).to have_http_status(406)
+      expect(Commune.all.count).to eq(1)
+    end
+
+    it 'should return 406 when commune is not found' do
+      authorize(@user)
+      delete :destroy, format: :json, params: { id: 23232323 }
+      expect(response).to have_http_status(404)
+      expect(Commune.all.count).to eq(1)
+    end
+
+
 
   end
 end
