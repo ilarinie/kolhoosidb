@@ -1,4 +1,8 @@
 FactoryGirl.define do
+  factory :invitation do
+    user_id 1
+    commune_id 1
+  end
 
   factory :user, aliases: [:owner, :admin], :class => User do
     username "test_user"
