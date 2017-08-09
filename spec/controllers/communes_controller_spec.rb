@@ -26,8 +26,8 @@ RSpec.describe CommunesController, type: :controller do
       expect(Commune.all.count).to eq(1)
       expect(Commune.first.admins).to include(@user)
       result = JSON.parse(response.body)
-      expect(result['commune']['name']).to eq('test_commune_1')
-      expect(result['commune']['description']).to eq('test_commune_1')
+      expect(result['name']).to eq('test_commune_1')
+      expect(result['description']).to eq('test_commune_1')
     end
     it 'should not create a new commune without a name' do
       post :create, params: { commune: FactoryGirl.attributes_for(:commune, name: nil)}, format: :json

@@ -1,4 +1,4 @@
-json.commune do
+ #json.commune do
   json.name commune.name
   json.description commune.description
   json.created_at commune.created_at
@@ -19,4 +19,4 @@ json.commune do
   json.purchases commune.purchases
   json.id commune.id
   json.current_user_admin commune.is_admin @current_user
-end
+#end

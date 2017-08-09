@@ -5,6 +5,7 @@ class User < ApplicationRecord
   has_many :commune_admins
   has_many :admin_communes, through: :commune_admins, :source => :commune
   has_many :task_completions
+  has_many :invitations
 
   validates :username, presence: true, uniqueness: true, length: {in: 2..30}
   validates :name, presence: true, length: {in: 2..30 }
