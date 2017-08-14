@@ -3,6 +3,31 @@ class ApplicationController < ActionController::API
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
 
 
+  helper_method :find_commune_and_check_if_user
+  helper_method :find_commune_and_check_if_admin
+
+  def find_commune_and_check_if_user
+    @commune = Commune.find(params[:commune_id])
+    if @commune.users.include? current_user or @commune.is_admin current_user
+      return true
+    else
+      @error = KolhoosiError.new('Only commune members can do that.')
+      render 'error', status: 403
+      return false
+    end
+  end
+
+  def find_commune_and_check_if_admin
+    @commune = Commune.find(params[:commune_id])
+    if not @commune.is_admin current_user
+      @error = KolhoosiError.new('Only admins can do that.')
+      render 'error', status: 403
+      return false
+    else
+      true
+    end
+  end
+
   # Tää renderöidään, kun autentikaatio tokenin kanssa feilaa
   def unauthorized_entity entity_name
     @error = KolhoosiError.new( 'Unauthorized request or invalid authorization header')

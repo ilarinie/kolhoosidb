@@ -15,4 +15,5 @@ class Commune < ApplicationRecord
   def is_admin user
     return self.admins.include? user
   end
+
 end
