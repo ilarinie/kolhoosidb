@@ -14,6 +14,7 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.new(task_params)
+    @task.commune = @commune
     if @task.save
       render 'show', status: 201
     else
