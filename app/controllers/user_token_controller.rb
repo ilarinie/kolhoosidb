@@ -3,7 +3,9 @@ class UserTokenController < Knock::AuthTokenController
   rescue_from ActiveRecord::RecordNotFound, :with => :profile_not_found
 
   def create
-    render :json => {:jwt => auth_token.token, :user => JSON.parse(@entity.to_json)}, status: :created
+    @jwt = auth_token.token
+    @user = @entity
+    render 'users/jwt', status: :created
   end
 
   private
