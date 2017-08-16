@@ -21,6 +21,7 @@
      json.commune_name inv.commune.name
      json.id inv.id
      json.commune_id inv.commune_id
+     json.username inv.user.username
     end
   end 
   json.purchases commune.purchases

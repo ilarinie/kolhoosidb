@@ -11,6 +11,7 @@ json.user do
       json.id invitation.id
       json.commune_name invitation.commune.name
       json.commune_id invitation.commune.id
+      json.username inv.user.username
     end
   end
 end
