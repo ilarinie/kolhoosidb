@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:update, :show]
   before_action :authenticate_user, only: [:update, :show, :showCurrent, :change_password, :index]
+  before_action :find_commune_and_check_if_user, only: [:index]
 
   def_param_group :user do
     param :user, Hash, :action_aware => true, :allow_nil => false, :required => true do
@@ -70,7 +71,7 @@ class UsersController < ApplicationController
     end
   end
 
-  api :GET, "/users/", "Index all users."
+  api :GET, "communes/:commune_id/users/", "Index all users."
   example <<-EOS
   Response / Request
   {
@@ -81,8 +82,8 @@ class UsersController < ApplicationController
   }
   EOS
   def index
-    @users = User.all
-
+    @users = @commune.users
+    @admins = @commune.admins
   end
 
   api :GET, "/users/:id", "Show a users profile."
