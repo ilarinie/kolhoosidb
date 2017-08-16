@@ -16,6 +16,13 @@
       json.id admin.id
     end
   end
+  json.invitations do
+    json.array! commune.invitations do |inv|
+     json.commune_name inv.commune.name
+     json.id inv.id
+     json.commune_id inv.commune_id
+    end
+  end 
   json.purchases commune.purchases
   json.id commune.id
   json.current_user_admin commune.is_admin @current_user
