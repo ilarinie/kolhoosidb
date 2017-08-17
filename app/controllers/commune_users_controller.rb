@@ -87,7 +87,7 @@ class CommuneUsersController < ApplicationController
   api :delete, 'communes/:commune_id/remove_user/:user_id', 'Removes the user from the commune'
   def remove_user
     @user = User.find(params[:user_id])
-    CommuneUser.find_by(user_id: @user.id, commune_id: @commune.id).first.delete
+    CommuneUser.find_by(user_id: @user.id, commune_id: @commune.id).destroy
     render json: { message: 'User removed from the commune.' }
   end
 
