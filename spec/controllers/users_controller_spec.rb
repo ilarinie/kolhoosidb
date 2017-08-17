@@ -23,19 +23,6 @@ RSpec.describe UsersController, type: :controller do
       expect(response).to have_http_status(406)
     end
   end
-  describe "GET /users/" do
-    render_views
-    before(:each) do
-      @user = create(:user)
-      @user2 = create(:user2)
-      authorize(@user)
-    end
-    it "should get all users" do
-      get :index, format: :json
-      expect(response).to have_http_status(200)
-      expect(response.body).to include("test_user_2")
-    end
-  end
   describe "PUT /users/:id" do
     before(:each) do
       @user = create(:user)
