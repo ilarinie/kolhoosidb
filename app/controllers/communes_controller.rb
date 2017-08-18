@@ -42,6 +42,7 @@ class CommunesController < ApplicationController
   param :id, Integer, "Id of the commune being updated."
   error :code => 406, :desc => "Param commune did not pass validations, returns error messages."
   def update
+    @current_user = current_user
     if @commune.update(commune_params)
       render "show", status: 200
     else
