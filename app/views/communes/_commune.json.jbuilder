@@ -3,7 +3,7 @@
   json.description commune.description
   json.created_at commune.created_at
   json.updated_at commune.updated_at
-  json.tasks commune.tasks
+  json.tasks []
   json.users do
     json.array! commune.users do |user|
       json.name user.name
@@ -24,7 +24,8 @@
      json.username inv.user.username
     end
   end 
-  json.purchases commune.purchases
+  json.purchases []
+  json.purchase_categories commune.purchase_categories
   json.id commune.id
   json.current_user_admin commune.is_admin @current_user
 #end
