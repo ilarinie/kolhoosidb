@@ -6,6 +6,7 @@ class User < ApplicationRecord
   has_many :admin_communes, through: :commune_admins, :source => :commune
   has_many :task_completions
   has_many :invitations
+  has_many :purchases
 
   validates :username, presence: true, uniqueness: true, length: {in: 2..30}
   validates :name, presence: true, length: {in: 2..30 }

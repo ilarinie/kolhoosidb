@@ -26,7 +26,10 @@ class PurchasesController < ApplicationController
 
   api :get, 'communes/:commune_id/budget', 'Get communes budget'
   def budget
-
+    @users = @commune.users + @commune.admins
+    @total = @commune.purchases.sum(:amount)
+    @avg = @total / @users.count
+    render 'budget', status: 200
   end
 
   private
