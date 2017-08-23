@@ -1,4 +1,4 @@
-class PurchaseCatergoriesController < ApplicationController
+class PurchaseCategoriesController < ApplicationController
   before_action :authenticate_user
   before_action :find_commune_and_check_if_admin
   before_action :set_category, except: [:create]
