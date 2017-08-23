@@ -6,6 +6,7 @@ class PurchaseCategoriesController < ApplicationController
   api :post, 'communes/:commune_id/purchase_categories'
   def create
     @category = PurchaseCategory.new(purchase_category_params)
+    @category.commune = @commune
     if @category.save
       render json: { message: 'New category added'}, status: 200
     else
