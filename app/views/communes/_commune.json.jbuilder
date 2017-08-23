@@ -25,6 +25,7 @@
     end
   end 
   json.purchases []
+  json.budget []
   json.purchase_categories commune.purchase_categories
   json.id commune.id
   json.current_user_admin commune.is_admin @current_user
