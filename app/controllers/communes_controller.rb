@@ -25,6 +25,7 @@ class CommunesController < ApplicationController
     @commune = Commune.new(commune_params)
     @commune.owner = current_user
     if @commune.save
+      PurchaseCategory.create(commune_id: @commune.id, name: "Default")
       if @commune.admins.append current_user
         render "show", status: 201
       else
