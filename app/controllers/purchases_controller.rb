@@ -11,6 +11,7 @@ class PurchasesController < ApplicationController
   def create
     @purchase = Purchase.new(purchase_params)
     @purchase.user = current_user
+    @purchase.commune = @commune
     if @purchase.save
       render 'show', status: 200
     else
