@@ -4,6 +4,7 @@ class Commune < ApplicationRecord
   has_many :commune_admins, :dependent => :destroy
   has_many :admins, :through => :commune_admins, :source => :user
   has_many :purchases, :dependent => :destroy
+  has_many :purchase_categories, :dependent => :destroy
   has_many :tasks, :dependent => :destroy
   belongs_to :owner, :class_name => 'User', :foreign_key => 'user_id'
   has_many :invitations

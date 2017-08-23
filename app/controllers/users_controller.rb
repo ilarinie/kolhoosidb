@@ -91,6 +91,20 @@ class UsersController < ApplicationController
   def show
   end
 
+  api :POST, '/users/change_password', 'Change your (current users) password'
+  param :password, String
+  param :password_confirmation, String
+  def change_password
+    @user = current_user
+    if @user.update(password: params[:password], password_confirmation: params[:password_confirmation])
+      render 'show', status: 200
+    else
+      @error = KolhoosiError.new('Updating password failed', @user.errors.full_messages)
+      render 'error', status: 406
+    end
+  end
+
+
   def showCurrent
     @user = current_user
     render "show", status: 200

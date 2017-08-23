@@ -88,7 +88,32 @@ class CommuneUsersController < ApplicationController
   def remove_user
     @user = User.find(params[:user_id])
     CommuneUser.find_by(user_id: @user.id, commune_id: @commune.id).destroy
-    render json: { message: 'User removed from the commune.' }
+    render json: { message: 'User removed from the commune.' }, status: 200
+  end
+
+
+  api :delete, 'communes/:commune_id/leave', 'Leave a commune'
+  def leave
+    @commune = Commune.find(params[:commune_id])
+    if @commune.users.include? current_user
+      CommuneUser.find_by(user_id: current_user.id, commune_id: @commune.id).destroy
+      check_if_commune_empty
+    elsif @commune.is_admin current_user
+      CommuneAdmin.find_by(user_id: current_user.id, commune_id: @commune.id).destroy
+      check_if_commune_empty
+    else
+      @error = KolhoosiError.new('You are not a member of the commune.')
+      render 'error', status: 406
+    end
+  end
+
+  def check_if_commune_empty
+    if @commune.users.empty? and @commune.admins.empty?
+      @commune.destroy
+      render json: { message: 'Left the commune and deleted the now empty commune.'}, status: 200
+    else
+      render json: { message: 'Left the commune.'}, status: 200
+    end
   end
 
 end
