@@ -22,6 +22,7 @@ class CommunesController < ApplicationController
   }
   EOS
   def create
+    PublicActivity.enabled = false
     @commune = Commune.new(commune_params)
     @commune.owner = current_user
     if @commune.save
@@ -36,6 +37,7 @@ class CommunesController < ApplicationController
       @error = KolhoosiError.new('Commune creation failed due to invalid parameters', @commune.errors.full_messages )
       render "error", status: 406
     end
+    PublicActivity.enabled = true
   end
 
   api :PUT, "/communes/:id", "Update a commune. Only commune admins are allowed to change commune details. Returns updated commune."

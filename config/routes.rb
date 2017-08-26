@@ -48,4 +48,7 @@ Rails.application.routes.draw do
   post 'communes/:commune_id/refunds/:refund_id/confirm' => 'refunds#confirm'
   post 'communes/:commune_id/refunds/:refund_id/reject' => 'refunds#reject'
 
+  # Activity Feed
+  get 'communes/:commune_id/activity_feed' => 'activity#index'
+
 end

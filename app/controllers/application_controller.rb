@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::API
   include Knock::Authenticable
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
-
+  include PublicActivity::StoreController
 
   helper_method :find_commune_and_check_if_user
   helper_method :find_commune_and_check_if_admin
@@ -9,7 +9,7 @@ class ApplicationController < ActionController::API
   def find_commune_and_check_if_user
     @commune = Commune.find(params[:commune_id])
     if @commune.users.include? current_user or @commune.is_admin current_user
-      return true
+      return @commune
     else
       @error = KolhoosiError.new('Only commune members can do that.')
       render 'error', status: 403
@@ -24,9 +24,10 @@ class ApplicationController < ActionController::API
       render 'error', status: 403
       return false
     else
-      true
+      @commune
     end
   end
+
 
   # Tää renderöidään, kun autentikaatio tokenin kanssa feilaa
   def unauthorized_entity entity_name
