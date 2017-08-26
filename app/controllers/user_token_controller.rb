@@ -5,6 +5,8 @@ class UserTokenController < Knock::AuthTokenController
   def create
     @jwt = auth_token.token
     @user = @entity
+    @sent_refunds = Refund.find_by(from: @user.id)
+    @received_refunds = Refund.find_by(to: @user.id)
     render 'users/jwt', status: :created
   end
 

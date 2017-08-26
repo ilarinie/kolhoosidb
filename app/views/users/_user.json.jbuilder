@@ -14,4 +14,18 @@ json.user do
       json.username invitation.user.username
     end
   end
+  json.sent_refunds do
+    json.array! sent_refunds do |refund|
+      json.from refund.sender.name
+      json.to refund.receiver.name
+      json.amount refund.amount
+    end
+  end
+  json.received_refunds do
+    json.array! received_refunds do |refund|
+      json.from refund.sender.name
+      json.to refund.receiver.name
+      json.amount refund.amount
+    end
+  end
 end

@@ -33,6 +33,8 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       # Jos menee validaatiosta läpi ja tallentuu, palautetaan /views/users/create.json.jbuilder -näkymä ja koodi 201
+      @sent_refunds = []
+      @received_refunds = []
       render "create", status: 201
     else
       @error = KolhoosiError.new('Creating user failed due to invalid parameters', @user.errors.full_messages)

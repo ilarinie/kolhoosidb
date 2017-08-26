@@ -43,4 +43,9 @@ Rails.application.routes.draw do
   put 'communes/:commune_id/purchase_categories/:purchase_category_id' => 'purchase_categories#update'
   delete 'commune/:commune_id/purchase_categories/:purchase_category_id' => 'purchase_categories#destroy'
 
+  # Refunds
+  post 'communes/:commune_id/refunds' => 'refunds#create'
+  post 'communes/:commune_id/refunds/:refund_id/confirm' => 'refunds#confirm'
+  post 'communes/:commune_id/refunds/:refund_id/reject' => 'refunds#reject'
+
 end
