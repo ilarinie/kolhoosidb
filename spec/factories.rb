@@ -1,4 +1,14 @@
 FactoryGirl.define do
+  factory :xp do
+    points 1
+    user_id 1
+    task_id 1
+  end
+  factory :refund do
+    to 1
+    from 1
+    amount "9.99"
+  end
   factory :invitation do
     user_id 1
     commune_id 1

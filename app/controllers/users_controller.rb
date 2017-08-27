@@ -33,6 +33,8 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       # Jos menee validaatiosta läpi ja tallentuu, palautetaan /views/users/create.json.jbuilder -näkymä ja koodi 201
+      @sent_refunds = []
+      @received_refunds = []
       render "create", status: 201
     else
       @error = KolhoosiError.new('Creating user failed due to invalid parameters', @user.errors.full_messages)
@@ -60,6 +62,8 @@ class UsersController < ApplicationController
   def update
     if @user == current_user
       if @user.update(user_update_params)
+        @sent_refunds = Refund.find_by(from: @user.id)
+        @received_refunds = Refund.find_by(to: @user.id)
         render "show", status: 200
       else
         @error = KolhoosiError.new('Updating user failed due to invalid parameters', @user.errors.full_messages)
