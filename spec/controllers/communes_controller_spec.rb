@@ -7,6 +7,7 @@ def authorize user
 end
 
 RSpec.describe CommunesController, type: :controller do
+  Commune.public_activity_off
   render_views
   before(:each) do
     request.env['HTTP_ACCEPT'] = "application/json"

@@ -14,6 +14,7 @@ class TaskCompletionsController < ApplicationController
   def complete
     @task_completion = TaskCompletion.new(task_id: @task.id, user_id: current_user.id)
     if @task_completion.save
+      TelegramApi.send_to_channel(@commune, '' + current_user.name + ' completed ' + @task.name)
       render 'show', status: 200
     else
       @error = KolhoosiError.new('Error completing task', @task_completion.errors.full_messages)

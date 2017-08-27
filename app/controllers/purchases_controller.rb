@@ -13,6 +13,7 @@ class PurchasesController < ApplicationController
     @purchase.user = current_user
     @purchase.commune = @commune
     if @purchase.save
+      TelegramApi.send_to_channel(@commune, '' + current_user.name + ' just bought ' + @purchase.description + ' @ ' + @purchase.amount.to_s + ' €')
       render 'show', status: 200
     else
       @error = KolhoosiError.new('Creating a purchase failed', @purchase.errors.full_messages )
