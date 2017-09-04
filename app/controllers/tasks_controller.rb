@@ -32,7 +32,7 @@ class TasksController < ApplicationController
   ]
   EOS
   def index
-    @tasks = @commune.tasks.includes(task_completions: [:user])
+    @tasks = Task.where(commune_id: @commune.id).includes(task_completions: [:user])
   end
 
   def show

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170903170232) do
+ActiveRecord::Schema.define(version: 20170904175925) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -78,6 +78,8 @@ ActiveRecord::Schema.define(version: 20170903170232) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "purchase_category_id"
+    t.index ["commune_id"], name: "index_purchases_on_commune_id"
+    t.index ["user_id"], name: "index_purchases_on_user_id"
   end
 
   create_table "refunds", force: :cascade do |t|
@@ -93,6 +95,8 @@ ActiveRecord::Schema.define(version: 20170903170232) do
     t.integer "task_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["task_id"], name: "index_task_completions_on_task_id"
+    t.index ["user_id"], name: "index_task_completions_on_user_id"
   end
 
   create_table "tasks", force: :cascade do |t|
@@ -104,6 +108,7 @@ ActiveRecord::Schema.define(version: 20170903170232) do
     t.integer "reward"
     t.string "completion_text"
     t.integer "creator_id"
+    t.index ["commune_id"], name: "index_tasks_on_commune_id"
   end
 
   create_table "users", force: :cascade do |t|
