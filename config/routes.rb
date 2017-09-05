@@ -51,4 +51,7 @@ Rails.application.routes.draw do
   # Activity Feed
   get 'communes/:commune_id/activity_feed' => 'activity#index'
 
+  # Top Lists
+  get 'communes/:commune_id/top_list' => 'top_list#index'
+
 end
