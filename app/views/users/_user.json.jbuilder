@@ -6,6 +6,7 @@ json.user do
   json.created_at user.created_at
   json.updated_at user.updated_at
   json.default_commune_id user.default_commune_id
+  json.default_theme user.default_theme
   json.communes user.communes
   json.invitations do
     json.array! user.invitations do |invitation|
