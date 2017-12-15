@@ -4,6 +4,7 @@ chmod 600 .travis/id_rsa
 ssh-add .travis/id_rsa
 
 git config --global push.default matching
+git reset --hard HEAD
 git remote add deploy ssh://ile@$IP:$PORT$DEPLOY_DIR
 git push deploy master
 
