@@ -3,6 +3,7 @@ cache: bundler
 branches:
   only:
   - master
+  - dev
 rvm:
 - 2.4.0
 services:
