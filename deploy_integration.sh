@@ -6,7 +6,7 @@ ssh-add ~/.ssh/id_rsa
 git remote add deploy ssh://kommuuniapp@$IP:$PORT$DEPLOY_DIR
 git push deploy master
 
-ssh ile@$IP -p $PORT <<EOF
+ssh kommuuniapp@$IP -p $PORT <<EOF
     cd $DEPLOY_DIR
     rake db:migrate
 EOF
