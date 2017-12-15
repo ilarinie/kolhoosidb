@@ -1,7 +1,7 @@
 #!/bin/bash
 eval "$(ssh-agent -s)}"
-chmod 600 .travis/id_rsa
-ssh-add .travis/id_rsa
+chmod 600 ~/.ssh/id_rsa
+ssh-add ~/.ssh/id_rsa
 
 git config --global push.default matching
 git reset --hard HEAD
