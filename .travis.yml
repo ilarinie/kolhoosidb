@@ -9,7 +9,7 @@ rvm:
 services:
 - postgresql
 before_script:
-- psql -c 'create database kolhoosidb-test;' -U postgres
+- psql -c 'create database kolhoosidb_test;' -U postgres
 script:
 - bundle exec rake db:migrate --trace
 - RAILS_ENV=test bundle exec rake db:migrate --trace
