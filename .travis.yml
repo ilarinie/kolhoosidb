@@ -17,7 +17,7 @@ script:
 - bundle exec rspec -fd spec/
 deploy:
   provider: script
-  script: sh deploy_integration.sh
+  script: /bin/bash deploy_integration.sh
   on:
     branch: dev
 before_install:
