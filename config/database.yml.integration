@@ -23,4 +23,4 @@ test:
 
 production:
   <<: *default
-database: i-kolhoosidb-prod
+  database: i-kolhoosidb-prod
