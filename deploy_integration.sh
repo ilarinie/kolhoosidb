@@ -1,5 +1,6 @@
 #!/bin/bash
 eval "$(ssh-agent -s)}"
+
 chmod 700 ~/.ssh/
 chmod 600 ~/.ssh/id_rsa
 
