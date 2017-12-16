@@ -15,7 +15,11 @@ script:
 - RAILS_ENV=test bundle exec rake db:migrate --trace
 - bundle exec rake db:test:prepare
 - bundle exec rspec -fd spec/
-after_success:
- -  /bin/sh deploy_integration.sh
+deploy:
+  provider: script
+  script: sh deploy_integration.sh
+  on:
+    branch: dev
 before_install:
   - openssl aes-256-cbc -K $encrypted_e539786aa59d_key -iv $encrypted_e539786aa59d_iv -in id_rsa.enc -out ~/.ssh/id_rsa -d
+  - echo -e "Host ilarinieminen.me\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
