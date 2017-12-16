@@ -7,7 +7,7 @@ chmod 600 ~/.ssh/id_rsa
 git remote add deploy ssh://kommuuniapp@$IP:$PORT$DEPLOY_DIR
 git push deploy dev
 
-ssh kommuuniapp@$IP -p $PORT -o StrictHostKeyChecking=no<<EOF
+ssh kommuuniapp@$IP -p $PORT -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no<<EOF
     cd $DEPLOY_DIR
     rake db:migrate
 EOF
