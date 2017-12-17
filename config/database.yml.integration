@@ -21,6 +21,7 @@ test:
   <<: *default
   database: kolhoosidb_test
 
+
 production:
   <<: *default
   database: i-kolhoosidb-prod
