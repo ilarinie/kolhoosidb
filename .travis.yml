@@ -20,6 +20,10 @@ deploy:
   script: /bin/bash deploy_integration.sh
   on:
     branch: dev
+  provider: script
+  script: /bin/bash deploy_prod.sh
+  on:
+    branch: master
 before_install:
   - openssl aes-256-cbc -K $encrypted_e539786aa59d_key -iv $encrypted_e539786aa59d_iv -in id_rsa.enc -out ~/.ssh/id_rsa -d
   - echo -e "Host ilarinieminen.me\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
