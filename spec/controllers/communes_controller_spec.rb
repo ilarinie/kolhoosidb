@@ -22,7 +22,7 @@ RSpec.describe CommunesController, type: :controller do
     end
 
     it 'should create a new commune and give admin privs with valid request' do
-      post :create, params: { commune: FactoryGirl.attributes_for(:commune)}, format: :json
+      post :create, params: { commune: FactoryBot.attributes_for(:commune)}, format: :json
       expect(response).to have_http_status(201)
       expect(Commune.all.count).to eq(1)
       expect(Commune.first.admins).to include(@user)
@@ -31,7 +31,7 @@ RSpec.describe CommunesController, type: :controller do
       expect(result['description']).to eq('test_commune_1')
     end
     it 'should not create a new commune without a name' do
-      post :create, params: { commune: FactoryGirl.attributes_for(:commune, name: nil)}, format: :json
+      post :create, params: { commune: FactoryBot.attributes_for(:commune, name: nil)}, format: :json
       expect(response).to have_http_status(406)
       expect(Commune.all.count).to eq(0)
     end
@@ -76,7 +76,7 @@ RSpec.describe CommunesController, type: :controller do
     end
     it 'should update commune with a valid request from an admin' do
       authorize(@user)
-      put :update, format: :json, params: { commune_id: @commune.id, commune: FactoryGirl.attributes_for(:commune, name: 'ihan_eri') }
+      put :update, format: :json, params: { commune_id: @commune.id, commune: FactoryBot.attributes_for(:commune, name: 'ihan_eri') }
       expect(response.body).to include('ihan_eri')
       expect(response).to have_http_status(200)
     end
@@ -89,7 +89,7 @@ RSpec.describe CommunesController, type: :controller do
 
     it 'should not update a commune without correct priviledges' do
       authorize(@user2)
-      put :update, format: :json, params: { commune_id: @commune.id, commune: FactoryGirl.attributes_for(:commune, name: 'ihan_eri') }
+      put :update, format: :json, params: { commune_id: @commune.id, commune: FactoryBot.attributes_for(:commune, name: 'ihan_eri') }
       expect(response).to have_http_status(403)
     end
   end

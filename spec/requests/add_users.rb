@@ -8,7 +8,7 @@ RSpec.describe "Create user, commune, add user", type: :request do
         "ACCEPT" => "application/json"
     }
 
-    post '/users/', params: { user: FactoryGirl.attributes_for(:user) }, :headers => headers
+    post '/users/', params: { user: FactoryBot.attributes_for(:user) }, :headers => headers
 
     @user = User.find_by(username: 'test_user')
 
@@ -25,7 +25,7 @@ RSpec.describe "Create user, commune, add user", type: :request do
         "Authorization" => "Bearer " + json["jwt"]
     }
 
-    post '/communes', params: { commune: FactoryGirl.attributes_for(:commune)}, :headers => headers
+    post '/communes', params: { commune: FactoryBot.attributes_for(:commune)}, :headers => headers
 
     expect(response).to have_http_status(201)
 
