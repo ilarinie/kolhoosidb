@@ -47,6 +47,18 @@ class RefundsController < ApplicationController
     end
   end
 
+  api :delete, '/commune/:commune_id/refunds/:refund_id/cancel'
+  def cancel
+    @refund = Refund.find(params[:refund_id])
+    if @refund.from == current_user.id
+      @refund.destroy!
+      render json: { message: 'Refund cancelled' }, status: 200
+    else
+      @error = KolhoosiError.new('Not your refund')
+      render 'error', status: 403
+    end
+  end
+
   private
 
   def refund_params

@@ -70,7 +70,7 @@ RSpec.describe RefundsController, type: :controller do
     end
   end
 
-  describe 'POST /commune/:commune_id/refunds/reject' do
+  describe 'POST /communes/:commune_id/refunds/reject' do
     before(:each) do
       @user = create(:user)
       @user2 = create(:user2)
@@ -96,6 +96,33 @@ RSpec.describe RefundsController, type: :controller do
       expect(response).to have_http_status(403)
       expect(Refund.all.count).to eq(1)
       expect(Purchase.all.count).to eq(0)
+    end
+  end
+
+  describe 'DELETE /communes/:commune_id/refunds/:refund_id/cancel' do
+    before(:each) do
+      @user = create(:user)
+      @user2 = create(:user2)
+      @commune = create(:commune, owner: @user)
+      @commune2 = create(:commune2, owner: @user)
+      @commune.users.append @user
+      @commune.admins.append @user
+      @commune.users.append @user2
+      @refund = Refund.create(from: @user.id, to: @user2.id, amount: 9.99)
+    end
+
+    it 'should be able to cancel own refund' do
+      authorize(@user)
+      delete :cancel, params: { commune_id: @commune.id, refund_id: @refund.id }, format: :json
+      expect(response).to have_http_status(200)
+      expect(Refund.all.count).to eq(0)
+    end
+
+    it 'should not be able to cancel someone elses refund' do
+      authorize(@user2)
+      delete :cancel, params: { commune_id: @commune.id, refund_id: @refund.id }, format: :json
+      expect(response).to have_http_status(403)
+      expect(Refund.all.count).to eq(1)
     end
   end
 

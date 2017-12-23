@@ -47,6 +47,7 @@ Rails.application.routes.draw do
   post 'communes/:commune_id/refunds' => 'refunds#create'
   post 'communes/:commune_id/refunds/:refund_id/confirm' => 'refunds#confirm'
   post 'communes/:commune_id/refunds/:refund_id/reject' => 'refunds#reject'
+  delete 'communes/:commune_id/refunds/:refund_id/cancel' => 'refunds#cancel'
 
   # Activity Feed
   get 'communes/:commune_id/activity_feed' => 'activity#index'
