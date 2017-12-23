@@ -6,7 +6,6 @@ FactoryBot.define do
   end
   factory :refund do
     to 1
-    from 1
     amount "9.99"
   end
   factory :invitation do
