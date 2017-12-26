@@ -34,6 +34,8 @@ group :development, :test do
   gem 'factory_bot_rails'
 end
 
+gem 'simplecov', :group => :test
+
 group :test do
   gem 'database_cleaner'
 end

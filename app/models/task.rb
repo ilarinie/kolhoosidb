@@ -4,6 +4,8 @@ class Task < ApplicationRecord
   belongs_to :commune
   has_many :task_completions
 
+  validates_presence_of :name
+
   def get_last_completions
     TaskCompletion.where(task_id: self.id).includes(:user).last(10)
   end

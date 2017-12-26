@@ -1,11 +1,5 @@
 require 'rails_helper'
 
-
-def authorize user
-  token = Knock::AuthToken.new(payload: { sub: user.id }).token
-  request.env['HTTP_AUTHORIZATION'] = "Bearer #{token}"
-end
-
 RSpec.describe RefundsController, type: :controller do
   Commune.public_activity_off
   render_views

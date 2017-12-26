@@ -235,6 +235,7 @@ DEPENDENCIES
   rails-erd
   rails_12factor
   rspec-rails
+  simplecov
   spring
   spring-watcher-listen (~> 2.0.0)
   telegram-bot-ruby

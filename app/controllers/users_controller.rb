@@ -62,8 +62,8 @@ class UsersController < ApplicationController
   def update
     if @user == current_user
       if @user.update(user_update_params)
-        @sent_refunds = Refund.find_by(from: @user.id)
-        @received_refunds = Refund.find_by(to: @user.id)
+        @sent_refunds = Refund.where(from: @user.id)
+        @received_refunds = Refund.where(to: @user.id)
         render "show", status: 200
       else
         @error = KolhoosiError.new('Updating user failed due to invalid parameters', @user.errors.full_messages)
@@ -109,8 +109,10 @@ class UsersController < ApplicationController
   end
 
 
-  def showCurrent
+  def show_current
     @user = current_user
+    @sent_refunds = Refund.where(from: @user.id)
+    @received_refunds = Refund.where(to: @user.id)
     render "show", status: 200
   end
 

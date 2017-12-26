@@ -11,6 +11,7 @@ class User < ApplicationRecord
   validates :username, presence: true, uniqueness: true, length: {in: 2..30}
   validates :name, presence: true, length: {in: 2..30 }
   validates :password, confirmation: true, length: { in: 8..20 }, :if => :password
+  validates :password_confirmation, presence: true, :if => :password
 
   def self.from_token_request request
     username = request.params['auth'] && request.params['auth']['username']

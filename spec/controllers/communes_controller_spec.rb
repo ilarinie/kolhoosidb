@@ -1,11 +1,4 @@
 require 'rails_helper'
-
-
-def authorize user
-  token = Knock::AuthToken.new(payload: { sub: user.id }).token
-  request.env['HTTP_AUTHORIZATION'] = "Bearer #{token}"
-end
-
 RSpec.describe CommunesController, type: :controller do
   Commune.public_activity_off
   render_views
@@ -29,6 +22,8 @@ RSpec.describe CommunesController, type: :controller do
       result = JSON.parse(response.body)
       expect(result['name']).to eq('test_commune_1')
       expect(result['description']).to eq('test_commune_1')
+      expect(PurchaseCategory.all.count).to eq(1)
+      expect(PurchaseCategory.first.commune_id).to eq(Commune.first.id)
     end
     it 'should not create a new commune without a name' do
       post :create, params: { commune: FactoryBot.attributes_for(:commune, name: nil)}, format: :json
@@ -110,9 +105,10 @@ RSpec.describe CommunesController, type: :controller do
     end
 
     it 'should not delete a commune with a request from non-owner' do
+      @commune.admins.append(@user2)
       authorize(@user2)
       delete :destroy, format: :json, params: { commune_id: @commune.id }
-      expect(response).to have_http_status(403)
+      expect(response).to have_http_status(401)
       expect(Commune.all.count).to eq(1)
     end
 

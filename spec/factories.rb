@@ -39,4 +39,28 @@ FactoryBot.define do
     description "test_commune_2"
   end
 
+  factory :task, :class => Task do
+    name "test_task"
+    priority 20
+    reward 20
+  end
+
+  factory :task_completion, :class => TaskCompletion do
+
+  end
+
+  factory :purchase_category, :class => PurchaseCategory do
+    name "test_category"
+  end
+
+  factory :purchase, :class => Purchase do
+    amount "9.99"
+    description "test purchase"
+  end
+
+  factory :purchase2, :class => Purchase do
+    amount "2.22"
+    description "test purchase 2"
+  end
+
 end

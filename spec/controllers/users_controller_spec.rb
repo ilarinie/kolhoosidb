@@ -1,14 +1,50 @@
 require 'rails_helper'
-
-
-def authorize user
-    token = Knock::AuthToken.new(payload: { sub: user.id }).token
-    request.env['HTTP_AUTHORIZATION'] = "Bearer #{token}"
-end
-
 RSpec.describe UsersController, type: :controller do
   before(:each) do
     request.env['HTTP_ACCEPT'] = "*/*, application/json"
+  end
+
+  describe 'GET communes/:commune_id/users' do
+    before(:each) do
+      generate_commune_and_users
+    end
+    it 'should return valid http response' do
+      authorize(@user)
+      get :index, params: { commune_id: @commune.id }, format: :json
+      expect(response).to have_http_status(200)
+    end
+  end
+
+  describe 'GET users/:user_id' do
+    before(:each) do
+      generate_commune_and_users
+    end
+    it 'should return valid http response' do
+      authorize(@user)
+      get :show_current, params: { user_id: @user.id }, format: :json
+      expect(response).to have_http_status(200)
+    end
+  end
+
+  describe 'POST users/change_password' do
+    before(:each) do
+      generate_commune_and_users
+    end
+    it 'should change pw with valid request' do
+      authorize(@user)
+      put :change_password, params: { password: "new_password", password_confirmation: "new_password" }, format: :json
+      expect(response).to have_http_status(200)
+    end
+    it 'should not change pw with invalid request' do
+      authorize(@user)
+      put :change_password, params: { password: "new_password", password_confirmation: "newrd" }, format: :json
+      expect(response).to have_http_status(406)
+    end
+    it 'should not change pw with another invalid request' do
+      authorize(@user)
+      put :change_password, params: { password: "new_password"}, format: :json
+      expect(response).to have_http_status(406)
+    end
   end
 
   describe "POST /users/" do
@@ -69,6 +105,13 @@ RSpec.describe UsersController, type: :controller do
       user = User.find(@user.id)
       expect(user.authenticate("goodPassword")).to eq(false)
     end
+  end
+
+  describe 'POST /users/change_password' do
+    before(:each) do
+      generate_commune_and_users
+    end
+    it 'should be '
   end
 
 end
