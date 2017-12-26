@@ -1,6 +1,5 @@
 require 'coveralls'
 require 'simplecov'
-Coveralls.wear!
 SimpleCov.start 'rails' do
   add_filter 'app/channels/application_cable/channel.rb'
   add_filter 'app/channels/application_cable/connection.rb'
@@ -10,8 +9,10 @@ SimpleCov.start 'rails' do
   add_filter 'app/lib/telegram_bot_controller.rb'
 end
 
-SimpleCov.formatter = SimpleCov::Formatter::HTMLFormatter
-
+SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
+    SimpleCov::Formatter::HTMLFormatter,
+    Coveralls::SimpleCov::Formatter
+]
 SimpleCov.at_exit do
   SimpleCov.result.format!
 end
