@@ -1,6 +1,6 @@
 # KOLHOOSIDB
 
-[![Coverage Status](https://coveralls.io/repos/github/akuakuka/kolhoosidb/badge.svg?branch=master)](https://coveralls.io/github/akuakuka/kolhoosidb?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/ilarinie/kolhoosidb/badge.svg?branch=master)](https://coveralls.io/github/ilarinie/kolhoosidb?branch=dev)
 
 [![Build Status](https://travis-ci.org/akuakuka/kolhoosidb.svg?branch=master)](https://travis-ci.org/akuakuka/kolhoosidb)
 
