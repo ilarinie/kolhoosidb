@@ -1,10 +1,5 @@
-communes = 2
+users = 2
 
-1..communes do |i|
-  commune = @commune.create(name: Faker::Team.unique.name,  description: 'Shit cunt')
-  1..5 do |j|
-
-  end
-
-
+(1..users).each do |i|
+  User.create! name: "testaaja#{i}", username: "testaaja#{i}", email: "test@test.fi", password: "testaaja", password_confirmation: "testaaja"
 end

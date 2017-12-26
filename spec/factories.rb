@@ -1,4 +1,4 @@
-FactoryGirl.define do
+FactoryBot.define do
   factory :xp do
     points 1
     user_id 1
@@ -6,7 +6,6 @@ FactoryGirl.define do
   end
   factory :refund do
     to 1
-    from 1
     amount "9.99"
   end
   factory :invitation do
@@ -38,6 +37,30 @@ FactoryGirl.define do
   factory :commune2, :class => Commune do
     name "test_commune_2"
     description "test_commune_2"
+  end
+
+  factory :task, :class => Task do
+    name "test_task"
+    priority 20
+    reward 20
+  end
+
+  factory :task_completion, :class => TaskCompletion do
+
+  end
+
+  factory :purchase_category, :class => PurchaseCategory do
+    name "test_category"
+  end
+
+  factory :purchase, :class => Purchase do
+    amount "9.99"
+    description "test purchase"
+  end
+
+  factory :purchase2, :class => Purchase do
+    amount "2.22"
+    description "test purchase 2"
   end
 
 end

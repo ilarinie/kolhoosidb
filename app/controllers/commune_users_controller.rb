@@ -63,7 +63,7 @@ class CommuneUsersController < ApplicationController
     @user = User.find(params[:user_id])
     if @commune.owner == current_user
       CommuneAdmin.create(user_id: @user.id, commune_id: @commune.id)
-      CommuneUser.find_by(user_id: @user.id, commune_id: @commune.id).first.destroy
+      CommuneUser.where(user_id: @user.id, commune_id: @commune.id).first.destroy
       render json: { message: 'User promoted succesfully' }, status: 200
     else
       @error = KolhoosiError.new('Only owners can do that.')
@@ -76,7 +76,7 @@ class CommuneUsersController < ApplicationController
     @user = User.find(params[:user_id])
     if @commune.owner == current_user
       CommuneUser.create(user_id: @user.id, commune_id: @commune.id)
-      CommuneAdmin.find_by(user_id: @user.id, commune_id: @commune.id ).first.destroy
+      CommuneAdmin.where(user_id: @user.id, commune_id: @commune.id ).first.destroy
       render json: { message: 'User demoted succesfully'}, status: 200
     else
       @error = KolhoosiError.new('You cant do that.')

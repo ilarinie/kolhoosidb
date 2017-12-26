@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   delete 'communes/:commune_id/tasks/:task_id' => 'tasks#destroy'
   get 'communes/:commune_id/tasks' => 'tasks#index'
   post 'communes/:commune_id/tasks/:task_id/complete' => 'task_completions#complete'
-  delete 'communes/:commune_id/tasks/:task_id' => 'task_completions#destroy'
+  delete 'communes/:commune_id/task_completions/:task_completion_id' => 'task_completions#destroy'
 
   # User adding/removing routes
   post 'communes/:commune_id/invite' => 'commune_users#invite'
@@ -23,11 +23,12 @@ Rails.application.routes.draw do
   delete 'invitations/:invitation_id' => 'commune_users#cancel_invitation'
 
   # User "own" routes
+  get 'users/:user_id' => 'users#show_current'
   delete 'communes/:commune_id/leave' => 'commune_users#leave'
   post 'users/change_password' => 'users#change_password'
 
   # Demote / promote
-  post 'communes/:commune_id/promote/:user_id' => 'commune_users#promote'
+  post 'communes/:commune_id/promote/:user_id' => 'commune_users#promote_to_admin'
   post 'communes/:commune_id/demote/:user_id' => 'commune_users#demote'
   delete 'communes/:commune_id/remove_user/:user_id' => 'commune_users#remove_user'
 
@@ -35,6 +36,7 @@ Rails.application.routes.draw do
   get 'communes/:commune_id/purchases' => 'purchases#index'
   post 'communes/:commune_id/purchases' => 'purchases#create'
   delete 'communes/:commune_id/purchases/:purchase_id' => 'purchases#cancel'
+  post 'communes/:commune_id/purchases/cancel_last' => 'purchases#cancel_last'
   get 'communes/:commune_id/budget' => 'purchases#budget'
 
   # Purchase Categories
@@ -47,6 +49,7 @@ Rails.application.routes.draw do
   post 'communes/:commune_id/refunds' => 'refunds#create'
   post 'communes/:commune_id/refunds/:refund_id/confirm' => 'refunds#confirm'
   post 'communes/:commune_id/refunds/:refund_id/reject' => 'refunds#reject'
+  delete 'communes/:commune_id/refunds/:refund_id/cancel' => 'refunds#cancel'
 
   # Activity Feed
   get 'communes/:commune_id/activity_feed' => 'activity#index'

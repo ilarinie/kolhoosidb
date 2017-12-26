@@ -21,9 +21,27 @@ class PurchasesController < ApplicationController
     end
   end
 
-  api :delete, 'communes/:commune_id/purchases/:purchase_id', 'Cancel a purchase'
+  api :delete, 'communes/:commune_id/purchases/:purchase_id', 'Delete a purchase.'
   def cancel
-    render json: { message: 'Not implemented yet' }
+    @purchase = Purchase.find(params[:purchase_id])
+    if @purchase.user_id == current_user.id
+      @purchase.destroy!
+      render json: { message: 'Purchase deleted.'}, status: 204
+    else
+      @error = KolhoosiError.new('Can only delete your own purchases.')
+      render 'error', status: 403
+    end
+  end
+
+  api :post, 'communes/:commune_id/purchases/cancel_last', 'Cancel previous purchase'
+  def cancel_last
+    @purchase = Purchase.where(commune_id:params[:commune_id], user_id: current_user.id).last
+    if @purchase.destroy!
+      render json: { message: 'Purchase destroyed succesfully'}, status: 204
+    else
+      @error = KolhoosiError.new('Canceling purchase failed.')
+      render 'error', status: 403
+    end
   end
 
   api :get, 'communes/:commune_id/budget', 'Get communes budget'

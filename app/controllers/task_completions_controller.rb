@@ -1,7 +1,7 @@
 class TaskCompletionsController < ApplicationController
   before_action :authenticate_user
   before_action :find_commune_and_check_if_user
-  before_action :set_task
+  before_action :set_task, except: [:destroy]
 
   api :post, 'communes/:commune_id/tasks/:task_id/complete'
   example <<-EOS
@@ -25,7 +25,7 @@ class TaskCompletionsController < ApplicationController
 
   api :delete, 'communes/:commune_id/task_completions/:task_completion_id'
   def destroy
-    @task_completion = TaskCompletion.find_by(commune_id: @commune.id, id: params[:task_completion_id])
+    @task_completion = TaskCompletion.find(params[:task_completion_id])
     if @task_completion.user == current_user or @commune.admins.include? current_user
       @task_completion.destroy
       render json: { message: "Deleted." }, status: 200

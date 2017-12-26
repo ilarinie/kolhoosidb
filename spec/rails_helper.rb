@@ -1,12 +1,13 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'spec_helper'
-require 'support/factory_girl'
+require 'support/factory_bot'
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../../config/environment', __FILE__)
 # Prevent database truncation if the environment is production
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 require 'rspec/rails'
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
+Dir[Rails.root.join("app/lib/**/*.rb")].each { |f| require f }
 # Add additional requires below this line. Rails is not loaded until this point!
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
@@ -69,4 +70,21 @@ RSpec.configure do |config|
   # config.filter_gems_from_backtrace("gem name")
 end
 
+def authorize user
+  token = Knock::AuthToken.new(payload: { sub: user.id }).token
+  request.env['HTTP_AUTHORIZATION'] = "Bearer #{token}"
+end
+
+def generate_commune_and_users
+  @user = create(:user)
+  @user2 = create(:user2)
+  @commune = create(:commune, owner: @user)
+  @commune2 = create(:commune2, owner: @user)
+  @commune.users.append @user
+  @commune.admins.append @user
+  @commune2.users.append @user
+  @commune2.admins.append @user
+  @commune.users.append @user2
+  @purchase_category = create(:purchase_category, commune_id: @commune.id)
+end
 
