@@ -5,7 +5,7 @@ class TelegramApi
 
 
   def self.send_to_channel commune, message
-    
+
     if commune.telegram_channel_token.nil?
       return
     end
