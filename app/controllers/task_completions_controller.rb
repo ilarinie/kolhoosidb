@@ -27,6 +27,10 @@ class TaskCompletionsController < ApplicationController
   def destroy
     @task_completion = TaskCompletion.find(params[:task_completion_id])
     if @task_completion.user == current_user or @commune.admins.include? current_user
+      @xp = Xp.where(user_id: @task_completion.user_id, task_id: @task_completion.task_id).last
+      unless @xp.nil?
+        @xp.destroy
+      end
       @task_completion.destroy
       render json: { message: "Deleted." }, status: 200
     else
