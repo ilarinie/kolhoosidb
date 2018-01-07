@@ -7,7 +7,7 @@ class Task < ApplicationRecord
   validates_presence_of :name
 
   def get_last_completions
-    TaskCompletion.where(task_id: self.id).includes(:user).last(10)
+    TaskCompletion.where(task_id: self.id).includes(:user).last(10).reverse!
   end
 
 end
