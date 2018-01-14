@@ -1,6 +1,7 @@
 json.id task.id
 json.name task.name
 json.priority task.priority
+json.reward task.reward
 json.completions do
   json.array! task.get_last_completions do |completion|
     json.task_id completion.task_id
