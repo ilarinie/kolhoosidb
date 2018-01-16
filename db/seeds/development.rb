@@ -6,7 +6,7 @@ users = 3
   User.create! name: "testaaja#{i}", username: "testaaja#{i}", email: "test@test.fi", password: "testaaja", password_confirmation: "testaaja"
 end
 
-@commune = Commune.create!(owner: User.first, name: 'Test commune', description: 'test description')
+@commune = Commune.create!(owner: User.first, name: 'Test commune', description: 'test description', telegram_channel_token: '@lehmatesti')
 
 @commune.admins << User.first
 @commune.users << User.second
