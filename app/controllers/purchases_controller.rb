@@ -4,7 +4,7 @@ class PurchasesController < ApplicationController
 
   api :get, 'communes/:commune_id/purchases', 'Get purchases of a commune'
   def index
-    @purchases = @commune.purchases.includes(:user).order('id DESC')
+    @purchases = @commune.purchases.includes(:user).order('created_at DESC')
   end
 
   api :post, 'communes/:commune_id/purchases', 'Create a new purchase for a commune'
