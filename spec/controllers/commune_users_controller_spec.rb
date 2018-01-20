@@ -94,7 +94,7 @@ RSpec.describe CommuneUsersController, type: :controller do
     end
     it 'should be able to promote user with a valid request' do
       authorize(@user)
-      post :promote_to_admin, params: { commune_id: @commune.id, user_id:@user.id }, format: :json
+      post :promote_to_admin, params: { commune_id: @commune.id, user_id:@user2.id }, format: :json
       expect(response).to have_http_status(200)
       expect(CommuneAdmin.all.count).to eq(3)
       expect(CommuneUser.all.count).to eq(2)
@@ -116,6 +116,7 @@ RSpec.describe CommuneUsersController, type: :controller do
   describe 'POST /communes/:commune_id/demote/:user_id' do
     before(:each) do
       generate_commune_and_users
+      CommuneUser.where(user_id: @user2.id).destroy_all
     end
     it 'should be able to demote user with a valid request' do
       @commune.admins.append(@user2)
@@ -123,7 +124,7 @@ RSpec.describe CommuneUsersController, type: :controller do
       post :demote, params: { commune_id: @commune.id, user_id:@user2.id }, format: :json
       expect(response).to have_http_status(200)
       expect(CommuneAdmin.all.count).to eq(2)
-      expect(CommuneUser.all.count).to eq(4)
+      expect(CommuneUser.all.count).to eq(3)
       expect(Commune.first.admins.count).to eq(1)
     end
 
@@ -133,7 +134,7 @@ RSpec.describe CommuneUsersController, type: :controller do
       post :demote, params: { commune_id: @commune.id, user_id:@user.id }, format: :json
       expect(response).to have_http_status(406)
       expect(CommuneAdmin.all.count).to eq(3)
-      expect(CommuneUser.all.count).to eq(3)
+      expect(CommuneUser.all.count).to eq(2)
       expect(Commune.first.admins.count).to eq(2)
     end
 

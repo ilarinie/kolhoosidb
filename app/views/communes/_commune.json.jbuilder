@@ -23,7 +23,9 @@
      json.commune_id inv.commune_id
      json.username inv.user.username
     end
-  end 
+  end
+  json.sent_refunds @current_user.sent_refunds(commune.id), partial: 'refunds/refund', as: :refund
+  json.received_refunds @current_user.received_refunds(commune.id), partial: 'refunds/refund', as: :refund
   json.purchases []
   json.budget []
   json.feed []

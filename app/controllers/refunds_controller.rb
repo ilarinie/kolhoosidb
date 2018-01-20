@@ -6,6 +6,7 @@ class RefundsController < ApplicationController
   def create
     @refund = Refund.new(refund_params)
     @refund.from = current_user.id
+    @refund.commune_id = @commune.id
     if @refund.save
       render json: { message: 'Refund created, wait for confirmation.'}, status: 200
     else
