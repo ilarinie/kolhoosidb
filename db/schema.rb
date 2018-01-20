@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180116190540) do
+ActiveRecord::Schema.define(version: 20180120105927) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,6 +37,9 @@ ActiveRecord::Schema.define(version: 20180116190540) do
     t.integer "commune_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["commune_id"], name: "index_commune_admins_on_commune_id"
+    t.index ["user_id", "commune_id"], name: "index_commune_admins_on_user_id_and_commune_id", unique: true
+    t.index ["user_id"], name: "index_commune_admins_on_user_id"
   end
 
   create_table "commune_users", force: :cascade do |t|
@@ -45,6 +48,9 @@ ActiveRecord::Schema.define(version: 20180116190540) do
     t.boolean "admin"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["commune_id"], name: "index_commune_users_on_commune_id"
+    t.index ["user_id", "commune_id"], name: "index_commune_users_on_user_id_and_commune_id", unique: true
+    t.index ["user_id"], name: "index_commune_users_on_user_id"
   end
 
   create_table "communes", force: :cascade do |t|
@@ -89,6 +95,10 @@ ActiveRecord::Schema.define(version: 20180116190540) do
     t.decimal "amount"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "commune_id"
+    t.index ["commune_id", "from"], name: "index_refunds_on_commune_id_and_from"
+    t.index ["commune_id", "to"], name: "index_refunds_on_commune_id_and_to"
+    t.index ["commune_id"], name: "index_refunds_on_commune_id"
   end
 
   create_table "task_completions", force: :cascade do |t|
@@ -96,6 +106,7 @@ ActiveRecord::Schema.define(version: 20180116190540) do
     t.integer "task_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["created_at"], name: "index_task_completions_on_created_at"
     t.index ["task_id"], name: "index_task_completions_on_task_id"
     t.index ["user_id"], name: "index_task_completions_on_user_id"
   end

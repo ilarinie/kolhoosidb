@@ -6,5 +6,9 @@ class ActivityController < ApplicationController
     @activities = PublicActivity::Activity.where(recipient: @commune).order('created_at DESC').limit(10)
   end
 
+  def latest_activity
+
+  end
+
 
 end

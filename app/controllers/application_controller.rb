@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::API
   include Knock::Authenticable
+  require_dependency "../lib/telegram_bot_controller.rb"
   rescue_from ActiveRecord::RecordNotFound, with: :not_found
   include PublicActivity::StoreController
 
