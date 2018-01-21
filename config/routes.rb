@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   get 'communes/:commune_id/tasks' => 'tasks#index'
   post 'communes/:commune_id/tasks/:task_id/complete' => 'task_completions#complete'
   delete 'communes/:commune_id/task_completions/:task_completion_id' => 'task_completions#destroy'
+  delete 'communes/:commune_id/undo_last_completion' => 'task_completions#undo_last'
 
   # User adding/removing routes
   post 'communes/:commune_id/invite' => 'commune_users#invite'

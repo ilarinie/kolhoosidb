@@ -35,7 +35,7 @@ class PurchasesController < ApplicationController
 
   api :post, 'communes/:commune_id/purchases/cancel_last', 'Cancel previous purchase'
   def cancel_last
-    @purchase = Purchase.where(commune_id:params[:commune_id], user_id: current_user.id).last
+    @purchase = Purchase.where(commune_id:params[:commune_id], user_id: current_user.id).last!
     if @purchase.destroy!
       render json: { message: 'Purchase destroyed succesfully'}, status: 204
     else
