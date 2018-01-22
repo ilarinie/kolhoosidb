@@ -1,7 +1,7 @@
 class TaskCompletionsController < ApplicationController
   before_action :authenticate_user
   before_action :find_commune_and_check_if_user
-  before_action :set_task, except: [:destroy]
+  before_action :set_task, except: [:destroy, :undo_last]
 
   api :post, 'communes/:commune_id/tasks/:task_id/complete'
   example <<-EOS
@@ -40,8 +40,17 @@ class TaskCompletionsController < ApplicationController
   end
 
 
+  api :delete, 'communes/:commune_id/undo_last_completion'
   def undo_last
-
+    @task_completion = TaskCompletion.where(user_id: current_user.id).last!
+    id = @task_completion.id
+    task_id = @task_completion.task_id
+    if @task_completion.destroy!
+      render json: { id: id, task_id: task_id }, status: 200
+    else
+      @error = KolhoosiError.new('Something went wrong, maybe you havent completed a task yet?', @task_completion.errors.full_messages)
+      render 'error', status: 406
+      end
   end
 
   def set_task

@@ -22,6 +22,16 @@ class User < ApplicationRecord
     super(:except => [:password_digest])
   end
 
+  def sent_refunds commune_id
+    Refund.where(from: self.id, commune_id: commune_id)
+  end
+
+  def received_refunds commune_id
+    Refund.where(to: self.id, commune_id: commune_id)
+  end
+
+
+
 
   def not_found
     @error = KolhoosiError.new('Username or password wrong.')

@@ -56,4 +56,29 @@ RSpec.describe TaskCompletionsController, type: :controller do
       expect(TaskCompletion.all.count).to eq(1)
     end
   end
+
+  describe 'DELETE /communes/:commune_id/task_completions/undo_last' do
+    before(:each) do
+      @task_completion = create(:task_completion, task_id: @task.id, user_id: @user.id)
+      @task_completion = create(:task_completion, task_id: @task.id, user_id: @user2.id)
+    end
+    it 'should be able to delete last completion with a valid request' do
+      authorize(@user)
+      expect(TaskCompletion.all.count).to eq(2)
+      delete :undo_last, params: { commune_id: @commune.id }, format: :json
+      expect(response).to have_http_status(200)
+      expect(TaskCompletion.all.count).to eq(1)
+      expect(TaskCompletion.first.user_id).to eq(@user2.id)
+    end
+
+    it 'should be able to delete last completion with a valid request 2' do
+      authorize(@user2)
+      delete :undo_last, params: { commune_id: @commune.id }, format: :json
+      expect(response).to have_http_status(200)
+      expect(TaskCompletion.all.count).to eq(1)
+      expect(TaskCompletion.first.user_id).to eq(@user.id)
+      delete :undo_last, params: { commune_id: @commune.id }, format: :json
+      expect(response).to have_http_status(404)
+    end
+  end
 end
