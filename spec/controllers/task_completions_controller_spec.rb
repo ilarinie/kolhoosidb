@@ -40,11 +40,14 @@ RSpec.describe TaskCompletionsController, type: :controller do
   describe 'DELETE /communes/:commune_id/task_completions/:task_completion_id' do
     before(:each) do
       @task_completion = create(:task_completion, task_id: @task.id, user_id: @user.id)
+      @xp = Xp.create(task_id: @task.id, user_id: @user.id, commune_id: @commune.id)
     end
     it 'should be able to remove completion with valid request' do
       authorize(@user)
       expect(TaskCompletion.all.count).to eq(1)
+      expect(Xp.all.count).to eq(1)
       delete :destroy, params: { commune_id: @commune.id, task_completion_id: @task_completion.id }, format: :json
+      expect(Xp.all.count).to eq(0)
       expect(response).to have_http_status(200)
       expect(TaskCompletion.all.count).to eq(0)
     end
@@ -60,7 +63,7 @@ RSpec.describe TaskCompletionsController, type: :controller do
   describe 'DELETE /communes/:commune_id/task_completions/undo_last' do
     before(:each) do
       @task_completion = create(:task_completion, task_id: @task.id, user_id: @user.id)
-      @task_completion = create(:task_completion, task_id: @task.id, user_id: @user2.id)
+      @task_completion2 = create(:task_completion, task_id: @task.id, user_id: @user2.id)
     end
     it 'should be able to delete last completion with a valid request' do
       authorize(@user)

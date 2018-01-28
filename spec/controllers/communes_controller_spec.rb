@@ -62,6 +62,19 @@ RSpec.describe CommunesController, type: :controller do
     end
   end
 
+  describe 'GET /communes/:id' do
+    before(:each) do
+      generate_commune_and_users
+    end
+
+    it 'should return commune data' do
+      authorize(@user)
+      get :show, params: { commune_id: @commune.id }
+      expect(response).to have_http_status(200)
+    end
+
+  end
+
   describe 'PUT /communes/:id' do
     before(:each) do
       @user = create(:user)

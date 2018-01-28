@@ -45,12 +45,8 @@ class TaskCompletionsController < ApplicationController
     @task_completion = TaskCompletion.where(user_id: current_user.id).last!
     id = @task_completion.id
     task_id = @task_completion.task_id
-    if @task_completion.destroy!
-      render json: { id: id, task_id: task_id }, status: 200
-    else
-      @error = KolhoosiError.new('Something went wrong, maybe you havent completed a task yet?', @task_completion.errors.full_messages)
-      render 'error', status: 406
-      end
+    @task_completion.destroy!
+    render json: { id: id, task_id: task_id }, status: 200
   end
 
   def set_task
