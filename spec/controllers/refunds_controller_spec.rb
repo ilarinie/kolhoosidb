@@ -45,7 +45,7 @@ RSpec.describe RefundsController, type: :controller do
       @commune.users.append @user
       @commune.admins.append @user
       @commune.users.append @user2
-      @refund = Refund.create(from: @user.id, to: @user2.id, amount: 9.99)
+      @refund = Refund.create(from: @user.id, to: @user2.id, amount: 9.99, commune_id: @commune.id)
     end
     it 'should be able to confirm a refund with a valid request' do
       authorize(@user2)
@@ -73,7 +73,7 @@ RSpec.describe RefundsController, type: :controller do
       @commune.users.append @user
       @commune.admins.append @user
       @commune.users.append @user2
-      @refund = Refund.create(from: @user.id, to: @user2.id, amount: 9.99)
+      @refund = Refund.create(from: @user.id, to: @user2.id, amount: 9.99, commune_id: @commune.id)
     end
     it 'should be able to reject a refund with a valid request' do
       authorize(@user2)
@@ -102,7 +102,7 @@ RSpec.describe RefundsController, type: :controller do
       @commune.users.append @user
       @commune.admins.append @user
       @commune.users.append @user2
-      @refund = Refund.create(from: @user.id, to: @user2.id, amount: 9.99)
+      @refund = Refund.create(from: @user.id, to: @user2.id, amount: 9.99, commune_id: @commune.id)
     end
 
     it 'should be able to cancel own refund' do
