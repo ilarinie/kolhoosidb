@@ -46,6 +46,11 @@ class TaskCompletionsController < ApplicationController
     id = @task_completion.id
     task_id = @task_completion.task_id
     @task_completion.destroy!
+    @xp = Xp.where(user_id: @task_completion.user_id, task_id: @task_completion.task_id).last
+    unless @xp.nil?
+      @xp.destroy!
+    end
+    TelegramApi.send_to_channel(@commune, "#{current_user.name} canceled completing #{@task_completion.task.name}.", true)
     render json: { id: id, task_id: task_id }, status: 200
   end
 
