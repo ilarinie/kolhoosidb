@@ -28,12 +28,8 @@ class CommunesController < ApplicationController
     @current_user = current_user
     if @commune.save
       PurchaseCategory.create(commune_id: @commune.id, name: "Default")
-      if @commune.admins.append current_user
-        render "show", status: 201
-      else
-        @error = KolhoosiError.new('Commune created, but adding the user to the commune failed', [])
-        render "error", status: 500
-      end
+      @commune.admins.append current_user
+      render "show", status: 201
     else
       @error = KolhoosiError.new('Commune creation failed due to invalid parameters', @commune.errors.full_messages )
       render "error", status: 406
@@ -58,12 +54,8 @@ class CommunesController < ApplicationController
   api :DELETE, "/communes/:id", "Delete a commune, all dependant tasks and budget. Only the owner of the commune can do this."
   def destroy
     if @commune.owner == current_user
-      if @commune.destroy
-        render :json => { :message =>  "Deleted." }, status: 200
-      else
-        @error = KolhoosiError.new('Commune could not be deleted', @commune.errors.full_messages)
-        render 'error', status: 406
-      end
+      @commune.destroy!
+      render :json => { :message =>  "Deleted." }, status: 200
     else
       @error = KolhoosiError.new('Only commune owners can delete communes.')
       render 'error', status: 401
